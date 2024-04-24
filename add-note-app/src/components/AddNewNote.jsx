@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-const AddNewNote = ({onAddNots}) => {
+const AddNewNote = ({onAddNotes}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -16,7 +16,7 @@ const AddNewNote = ({onAddNots}) => {
           createdAt: new Date().toISOString()
       }
 
-      onAddNots(newNote);
+      onAddNotes(newNote);
         setTitle("");
         setDescription("");
   }
