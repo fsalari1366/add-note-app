@@ -1,27 +1,44 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import AddNewNote from './components/AddNewNote'
 import NoteList from './components/NoteList';
 import './App.css'
 import NoteStatus from './components/NoteStatus';
 import NoteHeader from './components/NoteHeader';
 
+function noteReducer(state, {type, payload}) {
+switch(type) {
+   case "ADD": {
+     return [...state, payload]
+   }
+   case "DELETE": {
+     return state.filter((s) => s.id != payload )
+   }
+   case "CHECK": {
+     return state.map((note) => 
+        note.id === payload ? { ...note, completed: !note.completed } : note
+        )
+   }
+   default:
+    throw new Error("unknown error" + type)
+}
+}
+
 function App() {
-  const [notes, setNotes] = useState([]);
   const [sortBy, setSortBy] = useState("latest");
 
+  const [notes, dispatch] = useReducer(noteReducer, []);
+
   const handleAddNotes = (newNote) => {
-    setNotes((prevNotes) => [...prevNotes, newNote])
+    dispatch({ type: "ADD", payload: newNote });
   }
 
   const handleDeleteNote = (id) => {
-     setNotes(prevNotes => prevNotes.filter((n) => n.id != id ))
+    dispatch({ type: "DELETE", payload: id });
   }
 
   const handleCheck = (e) => {
     const noteId = Number(e.target.value);
-    setNotes((prevNotes) => prevNotes.map((note) => 
-     note.id === noteId ? { ...note, completed: !note.completed } : note
-     ));
+    dispatch({ type: "CHECK", payload: noteId});
   }
 
 
