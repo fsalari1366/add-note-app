@@ -1,7 +1,9 @@
-
+import { useNotes } from "../context/NotesContext";
 import NoteItem from "./NoteItem"
 
-const NoteList = ({notes, onDelete, onCheck, sortBy}) => {
+const NoteList = ({sortBy}) => {
+
+  const notes = useNotes();
 
   let sortedNotes = notes;
   if(sortBy === "earliest")
@@ -23,7 +25,7 @@ if(sortBy === "completed")
     <div className="note-list">
         {
             sortedNotes.map((note) => <NoteItem key={note.id} note={note}
-             onDelete={onDelete} onCheck={onCheck} />)
+              />)
         }
     </div>
   )

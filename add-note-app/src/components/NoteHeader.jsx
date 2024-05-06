@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useNotes } from '../context/NotesContext';
 
-const NoteHeader = ({notes, sortBy, onSort}) => {
-    
+
+const NoteHeader = ({sortBy, onSort}) => {
+    const notes = useNotes();
   return (
     <div className='note-header'>
      <h1>My Notes({notes.length})</h1>
