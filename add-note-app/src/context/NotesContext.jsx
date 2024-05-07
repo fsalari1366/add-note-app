@@ -25,9 +25,9 @@ export function NotesProvider({children}) {
     const [notes, dispatch] = useReducer(noteReducer, []);
     return (
     <NotesContext.Provider value={{notes}}>
-        <NotesDispatchContext value={{dispatch}}>
+        <NotesDispatchContext.Provider value={{dispatch}}>
         {children}
-        </NotesDispatchContext>
+        </NotesDispatchContext.Provider>
         </NotesContext.Provider>
     )
 }
