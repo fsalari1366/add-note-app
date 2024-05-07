@@ -23,10 +23,7 @@ if(sortBy === "completed")
 
   return (
     <div className="note-list">
-        {
-            sortedNotes.map((note) => <NoteItem key={note.id} note={note}
-              />)
-        }
+        {sortedNotes.map((note) => <NoteItem key={note.id} note={note} />)}
     </div>
   )
 }
