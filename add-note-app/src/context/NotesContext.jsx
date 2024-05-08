@@ -3,33 +3,35 @@ import { createContext, useContext, useReducer } from "react";
 const NotesContext = createContext(null);
 const NotesDispatchContext = createContext(null);
 
-function noteReducer(state, {type, payload}) {
-    switch(type) {
-       case "ADD": {
-         return [...state, payload]
-       }
-       case "DELETE": {
-         return state.filter((s) => s.id != payload )
-       }
-       case "CHECK": {
-         return state.map((note) => 
-            note.id === payload ? { ...note, completed: !note.completed } : note
-            )
-       }
-       default:
-        throw new Error("unknown error" + type)
+function notesReducer(notes, action) {
+  switch (action.type) {
+    case "add": {
+      return [...notes, action.payload];
     }
+    case "delete": {
+      return notes.filter((s) => s.id !== action.payload);
     }
+    case "complete": {
+      return notes.map((note) =>
+        note.id === action.payload
+          ? { ...note, completed: !note.completed }
+          : note
+      );
+    }
+    default:
+      throw new Error("unknown action" + action.type);
+  }
+}
 
-export function NotesProvider({children}) {
-    const [notes, dispatch] = useReducer(noteReducer, []);
-    return (
-    <NotesContext.Provider value={{notes}}>
-        <NotesDispatchContext.Provider value={{dispatch}}>
+export function NotesProvider({ children }) {
+  const [notes, dispatch] = useReducer(notesReducer, []);
+  return (
+    <NotesContext.Provider value={notes}>
+      <NotesDispatchContext.Provider value={dispatch}>
         {children}
-        </NotesDispatchContext.Provider>
-        </NotesContext.Provider>
-    )
+      </NotesDispatchContext.Provider>
+    </NotesContext.Provider>
+  );
 }
 
 export function useNotes() {
@@ -37,5 +39,5 @@ export function useNotes() {
 }
 
 export function useNotesDispatch() {
-    return useContext(NotesDispatchContext);
-  }
+  return useContext(NotesDispatchContext);
+}

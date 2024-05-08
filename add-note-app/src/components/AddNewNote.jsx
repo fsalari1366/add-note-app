@@ -18,7 +18,7 @@ const AddNewNote = () => {
           createdAt: new Date().toISOString()
       }
 
-      dispatch({ type: "ADD", payload: newNote });
+      dispatch({ type: "add", payload: newNote });
         setTitle("");
         setDescription("");
   }

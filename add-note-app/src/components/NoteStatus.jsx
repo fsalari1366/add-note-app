@@ -5,7 +5,7 @@ import Message from "./Message";
 function NoteStatus() {
   const notes = useNotes();
   const allNotes = notes.length;
-  const completedNotes = Object.values(notes).filter((n) => n.completed).length;
+  const completedNotes = notes.filter((n) => n.completed).length;
   const unCompletedNotes = allNotes - completedNotes;
 
     if(!allNotes) return (
